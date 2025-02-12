@@ -8,60 +8,60 @@ https://excalidraw.com/#room=a4f39f7e53e0b57c2954,kSKdkJ54TfgL7RJtP53nog
 Entidades Principais
 
 1. Curso
-id: int
-nome: String
-numeroCreditos: int
-disciplinas: List<Disciplina>
+- id: int
+- nome: String
+- numeroCreditos: int
+- disciplinas: List<Disciplina>
 
 2. Disciplina
-id: int
-nome: String
-codigo: String
-cargaHoraria: int
-professor: Professor
-alunosMatriculados: List<Aluno>
-maxAlunos: int (default = 60)
-minAlunos: int (default = 3)
-status: Enum (ATIVA, CANCELADA)
-tipo: Enum (OBRIGATORIA, OPTATIVA)
+- id: int
+- nome: String
+- codigo: String
+- cargaHoraria: int
+- professor: Professor
+- alunosMatriculados: List<Aluno>
+- maxAlunos: int (default = 60)
+- minAlunos: int (default = 3)
+- status: Enum (ATIVA, CANCELADA)
+- tipo: Enum (OBRIGATORIA, OPTATIVA)
 
 3. Aluno
-id: int
-nome: String
-matricula: String
-senha: String
-curso: Curso
-disciplinasMatriculadas: List<Disciplina>
-disciplinasOptativas: List<Disciplina>
-statusFinanceiro: boolean (true = pago, false = pendente)
+- id: int
+- nome: String
+- matricula: String
+- senha: String
+- curso: Curso
+- disciplinasMatriculadas: List<Disciplina>
+- disciplinasOptativas: List<Disciplina>
+- statusFinanceiro: boolean (true = pago, false = pendente)
 
 4. Professor
-id: int
-nome: String
-departamento: String
-disciplinasMinistradas: List<Disciplina>
-senha: String
+- id: int
+- nome: String
+- departamento: String
+- disciplinasMinistradas: List<Disciplina>
+- senha: String
 
 5. Secretaria
-id: int
-nome: String
-senha: String
-cursos: List<Curso>
-disciplinas: List<Disciplina>
+- id: int
+- nome: String
+- senha: String
+- cursos: List<Curso>
+- disciplinas: List<Disciplina>
 
 6. Sistema de Matrículas
-alunos: List<Aluno>
-professores: List<Professor>
-disciplinas: List<Disciplina>
-cursos: List<Curso>
-secretarios: List<Secretaria>
+- alunos: List<Aluno>
+- professores: List<Professor>
+- disciplinas: List<Disciplina>
+- cursos: List<Curso>
+- secretarios: List<Secretaria>
 
 7. Sistema de Cobranças
-id: int
-aluno: Aluno
-disciplinasCobradas: List<Disciplina>
-valorTotal: double
-statusPagamento: boolean
+- id: int
+- aluno: Aluno
+- disciplinasCobradas: List<Disciplina>
+- valorTotal: double
+- statusPagamento: boolean
 
 Principais Funcionalidades
 
