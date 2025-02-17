@@ -2,6 +2,7 @@
 Repositório para os projetos do laboratório de projeto de software 2025
 
 # Diagrama de Casos de Uso
+![Diagrama de Casos de Uso](Diagrama.png)
 https://excalidraw.com/#room=a4f39f7e53e0b57c2954,kSKdkJ54TfgL7RJtP53nog
 
 # Entidades e principais funcionalidades
