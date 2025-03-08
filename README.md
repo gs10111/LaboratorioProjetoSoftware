@@ -5,7 +5,7 @@ Repositório para os projetos do laboratório de projeto de software 2025
 https://excalidraw.com/#room=a4f39f7e53e0b57c2954,kSKdkJ54TfgL7RJtP53nog
 
 # Diagrama de Classes
-!(/lab01.png)
+![Diagrama de classes](/lab01.png)
 
 # Entidades e principais funcionalidades
 Entidades Principais
