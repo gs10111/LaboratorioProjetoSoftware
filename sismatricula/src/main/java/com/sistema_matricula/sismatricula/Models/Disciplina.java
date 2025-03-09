@@ -1,14 +1,15 @@
 package com.sistema_matricula.sismatricula.Models;
 
 import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
 
 /**
  * Classe que representa uma disciplina no sistema.
@@ -89,6 +90,9 @@ public class Disciplina {
     public List<Aluno> getAlunosMatriculados() {
         return alunosMatriculados;
     }
+    public int getNumeroAlunosMatriculados() {
+        return alunosMatriculados.size();
+    }
     public void setAlunosMatriculados(List<Aluno> alunosMatriculados) {
         this.alunosMatriculados = alunosMatriculados;
     }
@@ -97,14 +101,23 @@ public class Disciplina {
      * Ativa a disciplina, se condições forem atendidas.
      */
     public void ativarDisciplina() {
-        // TODO: implementar
+        if (verificarQuantidadeAlunos()) {
+            this.status = EEstadoDisciplina.ATIVA;
+        } else {
+            throw new IllegalStateException("Número de alunos não atingiu o mínimo.");
+        }
     }
 
     /**
      * Cancela a disciplina.
      */
     public void cancelarDisciplina() {
-        // TODO: implementar
+        if (status != EEstadoDisciplina.CANCELADA) {
+            this.status = EEstadoDisciplina.CANCELADA;
+            this.alunosMatriculados.clear();  // Limpar os alunos matriculados
+        } else {
+            throw new IllegalStateException("Disciplina já cancelada.");
+        }
     }
     
     /**
@@ -112,7 +125,11 @@ public class Disciplina {
      * @param aluno aluno a ser adicionado
      */
     public void adicionarAluno(Aluno aluno) {
-        // TODO: implementar
+        if (!verificarQuantidadeMaximaAlunos()) {
+            alunosMatriculados.add(aluno);
+        } else {
+            throw new IllegalStateException("Limite de alunos atingido.");
+        }
     }
     
     /**
@@ -120,7 +137,11 @@ public class Disciplina {
      * @param aluno aluno a ser removido
      */
     public void removerAluno(Aluno aluno) {
-        // TODO: implementar
+        if (alunosMatriculados.contains(aluno)) {
+            alunosMatriculados.remove(aluno);
+        } else {
+            throw new IllegalStateException("Aluno não matriculado nesta disciplina.");
+        }
     }
 
     /**
@@ -128,8 +149,7 @@ public class Disciplina {
      * @return true se a quantidade for válida, false caso contrário
      */
     public boolean verificarQuantidadeAlunos() {
-        // TODO: implementar
-        return false;
+        return alunosMatriculados.size() >= NUMERO_MIN_ALUNOS;
     }
     
     /**
