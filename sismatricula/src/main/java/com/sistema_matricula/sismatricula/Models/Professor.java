@@ -2,8 +2,6 @@ package com.sistema_matricula.sismatricula.Models;
 
 import java.util.List;
 
-import com.sistema_matricula.sismatricula.Services.ProfessorService;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
@@ -42,34 +40,17 @@ public class Professor extends UsuarioBase {
     public void setDisciplinasMinistradas(List<Disciplina> disciplinasMinistradas) {
         this.disciplinasMinistradas = disciplinasMinistradas;
     }
-
-    @Override
-    public void autenticar() {
-        ProfessorService professorService = new ProfessorService();
-        boolean autenticado = professorService.autenticar(this.getLogin(), this.getSenha());
-        
-        if (!autenticado) {
-            throw new RuntimeException("Falha na autenticação: Credenciais inválidas. \nCheque seu login e senha e tente novamente!");
-        }
-    }
-
-    /**
-     * Lista os alunos por disciplina.
-     * @param disciplina disciplina para listar alunos
-     * @return String formatada com a lista de alunos
-     */
-    public String listarAlunosPorDisciplina(Disciplina disciplina) {
-        // TODO: implementar
-        return "";
-    }
     
     /**
      * Adiciona uma disciplina ao professor.
      * @param disciplina disciplina a ser adicionada
      * @return String indicando o sucesso ou falha da operação
      */
-    public String adicionarDisciplinaMinistrada(Disciplina disciplina) {
-        // TODO: implementar
-        return "";
+    public void adicionarDisciplinaMinistrada(Disciplina disciplina) {
+        if (disciplina != null && !disciplinasMinistradas.contains(disciplina)) {
+            disciplinasMinistradas.add(disciplina);
+        } else {
+            throw new IllegalStateException("A disciplina já está no currículo ou é nula.");
+        }
     }
 } 
