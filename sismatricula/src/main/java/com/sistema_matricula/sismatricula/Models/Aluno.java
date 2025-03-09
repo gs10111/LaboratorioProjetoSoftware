@@ -11,7 +11,6 @@ import jakarta.persistence.CascadeType;
 @Entity
 public class Aluno extends UsuarioBase {
 
-    private String ra; // Registro Acadêmico
     private static final int MAX_DISCIPLINAS_OBRIGATORIAS = 4;
     private static final int MAX_DISCIPLINAS_OPTATIVAS = 2;
     
@@ -26,19 +25,11 @@ public class Aluno extends UsuarioBase {
      * Construtor completo.
      */
     public Aluno(Long id, String descricao, String email, String senha, String login, 
-                 EPerfilUsuario tipo, String ra, List<Matricula> matriculas) {
+                 EPerfilUsuario tipo, List<Matricula> matriculas) {
         super(id, descricao, email, senha, login, tipo);
-        this.ra = ra;
         this.matriculas = matriculas;
     }
 
-    // Getters e Setters
-    public String getRa() {
-        return ra;
-    }
-    public void setRa(String ra) {
-        this.ra = ra;
-    }
     public List<Matricula> getMatriculas() {
         return matriculas;
     }
