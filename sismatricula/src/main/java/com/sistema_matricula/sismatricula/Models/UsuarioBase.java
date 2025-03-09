@@ -1,13 +1,15 @@
 package com.sistema_matricula.sismatricula.Models;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 /**
  * Classe abstrata que representa um usuário genérico do sistema.
@@ -92,7 +94,16 @@ public abstract class UsuarioBase {
     /**
      * Método para autenticação do usuário.
      */
-    public abstract void autenticar();
+    public boolean autenticar(String senhaDigitada) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(senhaDigitada, this.senha);
+    }
+
+    // Método para criptografar senha antes de salvar no banco
+    public String criptografarSenha(String senha) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(senha);
+    }
     
     /**
      * Valida a senha do usuário.

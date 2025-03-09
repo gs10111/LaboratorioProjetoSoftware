@@ -1,5 +1,7 @@
 package com.sistema_matricula.sismatricula.Models;
 
+import com.sistema_matricula.sismatricula.Services.AdministradorService;
+
 import jakarta.persistence.Entity;
 
 /**
@@ -16,27 +18,14 @@ public class Administrador extends UsuarioBase {
         super(id, descricao, email, senha, login, tipo);
     }
 
-    @Override
-    public void autenticar() {
-        // TODO: Implementar lógica de autenticação para Administrador
-    }
-
     /**
      * Cria um novo usuário.
      * @param usuario usuário a ser criado
      * @return void
      */
     public void criarUsuario(UsuarioBase usuario) {
-        // TODO: implementar
-    }
-
-    /**
-     * Remove um usuário.
-     * @param usuario usuário a ser removido
-     * @return void
-     */
-    public void removerUsuario(UsuarioBase usuario) {
-        // TODO: implementar
+        AdministradorService administradorService = new AdministradorService();
+        administradorService.criarUsuario(usuario);
     }
 
     /**
@@ -44,7 +33,7 @@ public class Administrador extends UsuarioBase {
      * @param usuario usuário que terá o perfil alterado
      * @return void
      */
-    public void alterarPerfilUsuario(UsuarioBase usuario) {
-        // TODO: implementar
+    public void alterarPerfilUsuario(EPerfilUsuario novoPerfil) {
+        this.setTipo(novoPerfil);
     }
 } 
