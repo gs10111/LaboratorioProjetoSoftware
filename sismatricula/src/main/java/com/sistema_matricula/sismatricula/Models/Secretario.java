@@ -19,28 +19,51 @@ public class Secretario extends UsuarioBase {
     /**
      * Gera um currículo.
      * @param curriculo currículo a ser gerado
-     * @return void
      */
     public void gerarCurriculo(Curriculo curriculo) {
-        // TODO: implementar
+        if (curriculo != null) {
+            //@TODO Adicionar lógica de validação para gerar o currículo
+            System.out.println("Currículo gerado: " + curriculo.getNome());
+        } else {
+            throw new IllegalArgumentException("Currículo não pode ser nulo.");
+        }
     }
 
     /**
      * Cadastra uma nova disciplina no sistema.
      * @param disciplina disciplina a ser cadastrada
-     * @return void
      */
     public void cadastrarDisciplina(Disciplina disciplina) {
-        // TODO: implementar
+        if (disciplina != null) {
+            // Validar se a disciplina atende aos critérios
+            if (validarDisciplinaParaCadastro(disciplina)) {
+                // Adicionar lógica para salvar a disciplina no banco de dados ou no repositório
+                System.out.println("Disciplina cadastrada: " + disciplina.getNome());
+            } else {
+                throw new IllegalStateException("Disciplina não atende aos requisitos para cadastro.");
+            }
+        } else {
+            throw new IllegalArgumentException("Disciplina não pode ser nula.");
+        }
     }
 
     /**
      * Cancela uma disciplina.
      * @param disciplina disciplina a ser cancelada
-     * @return void
      */
     public void cancelarDisciplina(Disciplina disciplina) {
-        // TODO: implementar
+        if (disciplina != null) {
+            // Validar se a disciplina está ativa e pode ser cancelada
+            if (disciplina.getStatus() == EEstadoDisciplina.ATIVA) {
+                disciplina.setStatus(EEstadoDisciplina.CANCELADA);
+                // Adicionar lógica para atualizar a disciplina no banco de dados
+                System.out.println("Disciplina cancelada: " + disciplina.getNome());
+            } else {
+                throw new IllegalStateException("A disciplina não está ativa para cancelamento.");
+            }
+        } else {
+            throw new IllegalArgumentException("Disciplina não pode ser nula.");
+        }
     }
     
     /**
@@ -49,7 +72,12 @@ public class Secretario extends UsuarioBase {
      * @return boolean indicando se a disciplina é válida
      */
     public boolean validarDisciplinaParaCadastro(Disciplina disciplina) {
-        // TODO: implementar
-        return false;
+        if (disciplina == null) {
+            return false;
+        }
+        boolean quantidadeAlunosValida = disciplina.verificarQuantidadeAlunos();
+        boolean professorValido = disciplina.getProfessorResponsavel() != null;
+
+        return quantidadeAlunosValida && professorValido;
     }
-} 
+}
