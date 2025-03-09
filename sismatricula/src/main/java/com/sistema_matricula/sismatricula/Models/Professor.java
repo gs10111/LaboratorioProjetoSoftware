@@ -1,6 +1,9 @@
 package com.sistema_matricula.sismatricula.Models;
 
 import java.util.List;
+
+import com.sistema_matricula.sismatricula.Services.ProfessorService;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
@@ -42,7 +45,12 @@ public class Professor extends UsuarioBase {
 
     @Override
     public void autenticar() {
-        // TODO: Implementar lógica de autenticação para Professor
+        ProfessorService professorService = new ProfessorService();
+        boolean autenticado = professorService.autenticar(this.getLogin(), this.getSenha());
+        
+        if (!autenticado) {
+            throw new RuntimeException("Falha na autenticação: Credenciais inválidas. \nCheque seu login e senha e tente novamente!");
+        }
     }
 
     /**

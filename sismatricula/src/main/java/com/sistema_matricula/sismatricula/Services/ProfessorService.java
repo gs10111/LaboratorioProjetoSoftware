@@ -1,8 +1,12 @@
 package com.sistema_matricula.sismatricula.Services;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.sistema_matricula.sismatricula.Interfaces.ProfessorRepository;
 import com.sistema_matricula.sismatricula.Models.Professor;
 
@@ -14,6 +18,20 @@ public class ProfessorService {
 
     @Autowired
     private ProfessorRepository professorRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public boolean autenticar(String email, String senha) {
+        Optional<Professor> professorOpt = professorRepository.findByEmail(email);
+
+        if (professorOpt.isPresent()) {
+            Professor professor = professorOpt.get();
+            return passwordEncoder.matches(senha, professor.getSenha());
+        }
+
+        return false;
+    }
 
     /**
      * Retorna todos os professores.

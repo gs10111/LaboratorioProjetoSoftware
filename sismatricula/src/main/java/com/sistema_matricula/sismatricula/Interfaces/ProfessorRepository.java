@@ -1,13 +1,18 @@
 package com.sistema_matricula.sismatricula.Interfaces;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import com.sistema_matricula.sismatricula.Models.Professor;
 
-/**
- * Repositório para a entidade Professor.
- */
 @Repository
-public interface ProfessorRepository extends JpaRepository<Professor, Long> {
-    // Métodos de consulta customizados, se necessário
-} 
+public interface ProfessorRepository extends JpaRepository<Professor, Long>
+{
+    // Busca um professor pelo SIAPE
+    Optional<Professor> findBySiape(String siape);
+    
+    // Busca um professor pelo email
+    Optional<Professor> findByEmail(String email);
+}
