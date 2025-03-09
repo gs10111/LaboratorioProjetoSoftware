@@ -34,7 +34,11 @@ public class Matricula {
     @ManyToOne
     private PeriodoMatricula periodoMatricula;
 
-    public Matricula() {
+    public Matricula(Aluno aluno, Disciplina disciplina) {
+        this.aluno = aluno;
+        this.disciplina = disciplina;
+        this.dataMatricula = LocalDate.now();
+        this.situacao = EEstadoMatricula.EFETIVADA;
     }
 
     public Matricula(Long id, Aluno aluno, Disciplina disciplina, LocalDate dataMatricula, 
