@@ -1,13 +1,14 @@
 package com.sistema_matricula.sismatricula.Models;
 
 import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
 
 /**
  * Classe que representa a matrícula de um aluno em uma disciplina.
@@ -89,7 +90,12 @@ public class Matricula {
      * @return void
      */
     public void efetivarMatricula() {
-        // TODO: implementar
+        if (validarPeriodoMatricula() && validarLimiteDisciplina()) {
+            this.situacao = EEstadoMatricula.EFETIVADA;
+            System.out.println("Matrícula efetivada com sucesso.");
+        } else {
+            System.out.println("Erro ao efetivar matrícula: Regras não atendidas.");
+        }
     }
 
     /**
@@ -97,7 +103,12 @@ public class Matricula {
      * @return void
      */
     public void cancelarMatricula() {
-        // TODO: implementar
+        if (this.situacao == EEstadoMatricula.EFETIVADA) {
+            this.situacao = EEstadoMatricula.CANCELADA;
+            System.out.println("Matrícula cancelada com sucesso.");
+        } else {
+            System.out.println("Erro: Matrícula não pode ser cancelada.");
+        }
     }
 
     /**
@@ -105,7 +116,12 @@ public class Matricula {
      * @return void
      */
     public void notificarSistemaCobranca() {
-        // TODO: implementar
+        if (this.situacao == EEstadoMatricula.EFETIVADA) {
+            System.out.println("Notificando sistema de cobrança para o aluno " + aluno.getDescricao());
+            // Aqui você integraria com o sistema de cobrança.
+        } else {
+            System.out.println("Erro: Matrícula não efetivada. Não é possível notificar cobrança.");
+        }
     }
     
     /**
@@ -113,7 +129,11 @@ public class Matricula {
      * @return boolean indicando se o período é válido
      */
     public boolean validarPeriodoMatricula() {
-        // TODO: implementar
+        LocalDate hoje = LocalDate.now();
+        // Supondo que o PeríodoMatricula tenha um intervalo de datas
+        if (periodoMatricula != null) {
+            return !hoje.isBefore(periodoMatricula.getDataInicio()) && !hoje.isAfter(periodoMatricula.getDataFim());
+        }
         return false;
     }
     
@@ -122,7 +142,9 @@ public class Matricula {
      * @return boolean indicando se há vagas disponíveis
      */
     public boolean validarLimiteDisciplina() {
-        // TODO: implementar
+        if (disciplina != null) {
+            return disciplina.getNumeroAlunosMatriculados() < Disciplina.getNumeroMaxAlunos();
+        }
         return false;
     }
 } 
