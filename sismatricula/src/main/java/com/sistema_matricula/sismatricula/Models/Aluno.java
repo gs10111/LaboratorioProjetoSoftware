@@ -1,9 +1,10 @@
 package com.sistema_matricula.sismatricula.Models;
 
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
 
 /**
  * Classe que representa um aluno do sistema.
@@ -37,18 +38,26 @@ public class Aluno extends UsuarioBase {
         this.matriculas = matriculas;
     }
 
-    @Override
-    public void autenticar() {
-        // TODO: Implementar lógica de autenticação para Aluno
-    }
-
     /**
      * Solicita a matrícula em uma disciplina.
      * @param disciplina disciplina desejada
      * @return void
      */
     public void solicitarMatricula(Disciplina disciplina) {
-        // TODO: implementar
+        if (disciplina.verificarQuantidadeMaximaAlunos()) {
+            System.out.println("A disciplina já atingiu o número máximo de alunos.");
+            return;
+        }
+
+        if (!validarLimiteDisciplinas()) {
+            System.out.println("O aluno já atingiu o limite de disciplinas permitidas.");
+            return;
+        }
+
+        Matricula novaMatricula = new Matricula(this, disciplina);
+        matriculas.add(novaMatricula);
+        disciplina.adicionarAluno(this);
+        System.out.println("Matrícula realizada com sucesso na disciplina: " + disciplina.getNome());
     }
 
     /**
@@ -56,8 +65,8 @@ public class Aluno extends UsuarioBase {
      * @param disciplina disciplina a cancelar
      * @return void
      */
-    public void cancelarMatricula(Disciplina disciplina) {
-        // TODO: implementar
+    public void cancelarMatricula(Matricula matricula) {
+        matricula.cancelarMatricula();
     }
     
     /**
@@ -65,8 +74,15 @@ public class Aluno extends UsuarioBase {
      * @return String com as disciplinas
      */
     public String listarDisciplinasMatriculadas() {
-        // TODO: implementar
-        return "";
+        if (matriculas.isEmpty()) {
+            return "O aluno não está matriculado em nenhuma disciplina.";
+        }
+
+        StringBuilder disciplinas = new StringBuilder("Disciplinas matriculadas:\n");
+        for (Matricula matricula : matriculas) {
+            disciplinas.append("- ").append(matricula.getDisciplina().getNome()).append("\n");
+        }
+        return disciplinas.toString();
     }
     
     /**
@@ -74,7 +90,17 @@ public class Aluno extends UsuarioBase {
      * @return boolean indicando se o limite foi atingido
      */
     public boolean validarLimiteDisciplinas() {
-        // TODO: implementar
-        return false;
+        int obrigatorias = 0;
+        int optativas = 0;
+
+        for (Matricula matricula : matriculas) {
+            if (matricula.getDisciplina().getTipo() == ETipoDisciplina.OBRIGATORIA) {
+                obrigatorias++;
+            } else if (matricula.getDisciplina().getTipo() == ETipoDisciplina.OPTATIVA) {
+                optativas++;
+            }
+        }
+
+        return obrigatorias < MAX_DISCIPLINAS_OBRIGATORIAS && optativas < MAX_DISCIPLINAS_OPTATIVAS;
     }
 } 
