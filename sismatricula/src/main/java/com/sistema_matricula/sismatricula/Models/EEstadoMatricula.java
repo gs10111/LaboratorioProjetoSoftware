@@ -5,5 +5,6 @@ package com.sistema_matricula.sismatricula.Models;
  */
 public enum EEstadoMatricula {
     EFETIVADA,
+    PENDENTE,
     CANCELADA
 } 
