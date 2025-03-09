@@ -45,7 +45,11 @@ public class Curriculo {
      * @param disciplina disciplina a ser adicionada
      */
     public void adicionarDisciplina(Disciplina disciplina) {
-        // TODO: implementar
+        if (disciplina != null && !disciplinas.contains(disciplina)) {
+            disciplinas.add(disciplina);
+        } else {
+            throw new IllegalStateException("A disciplina já está no currículo ou é nula.");
+        }
     }
 
     /**
@@ -53,6 +57,10 @@ public class Curriculo {
      * @param disciplina disciplina a ser removida
      */
     public void removerDisciplina(Disciplina disciplina) {
-        // TODO: implementar
+        if (disciplinas.contains(disciplina)) {
+            disciplinas.remove(disciplina);
+        } else {
+            throw new IllegalStateException("A disciplina não está no currículo.");
+        }
     }
 } 
