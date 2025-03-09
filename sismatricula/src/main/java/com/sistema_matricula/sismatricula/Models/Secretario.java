@@ -16,11 +16,6 @@ public class Secretario extends UsuarioBase {
         super(id, descricao, email, senha, login, tipo);
     }
 
-    @Override
-    public void autenticar() {
-        // TODO: Implementar lógica de autenticação para Secretário
-    }
-
     /**
      * Gera um currículo.
      * @param curriculo currículo a ser gerado
