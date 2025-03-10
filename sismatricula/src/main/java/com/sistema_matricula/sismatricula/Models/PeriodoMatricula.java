@@ -1,23 +1,13 @@
 package com.sistema_matricula.sismatricula.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 import java.time.LocalDate;
 
 /**
  * Classe que representa o período de matrícula.
  */
-
-@Entity
 public class PeriodoMatricula {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDate dataInicio;
     private LocalDate dataFim;
 

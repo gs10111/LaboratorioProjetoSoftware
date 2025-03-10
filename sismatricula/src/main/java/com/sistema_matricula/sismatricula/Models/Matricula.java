@@ -2,7 +2,13 @@ package com.sistema_matricula.sismatricula.Models;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 /**
  * Classe que representa a matrícula de um aluno em uma disciplina.
@@ -24,8 +30,8 @@ public class Matricula {
     
     @Enumerated(EnumType.STRING)
     private EEstadoMatricula situacao;
-
-    @OneToOne
+    
+    @ManyToOne
     private PeriodoMatricula periodoMatricula;
 
     public Matricula(Aluno aluno, Disciplina disciplina) {
@@ -43,10 +49,6 @@ public class Matricula {
         this.dataMatricula = dataMatricula;
         this.situacao = situacao;
         this.periodoMatricula = periodoMatricula;
-    }
-
-    public Matricula() {
-
     }
 
     // Getters e Setters
