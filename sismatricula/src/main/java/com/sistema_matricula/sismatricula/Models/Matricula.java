@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 /**
  * Classe que representa a matrícula de um aluno em uma disciplina.
@@ -31,7 +32,7 @@ public class Matricula {
     @Enumerated(EnumType.STRING)
     private EEstadoMatricula situacao;
     
-    @ManyToOne
+    @OneToOne
     private PeriodoMatricula periodoMatricula;
 
     public Matricula(Aluno aluno, Disciplina disciplina) {
